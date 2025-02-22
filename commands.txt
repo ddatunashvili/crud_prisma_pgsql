@@ -1,0 +1,88 @@
+
+
+npm init
+
+npm i pg
+
+npx prisma init
+
+
+after creating schema  
+- Generate Prisma Client & Migrate DB
+npx prisma migrate dev --name init
+
+
+> default user is postgres 
+
+
+
+
+/                                                    /
+
+
+- reset password 
+
+
+C:\Program Files\PostgreSQL\<version>\data\pg_hba.conf
+
+
+* C:\Program Files\PostgreSQL\16\data\pg_hba.conf
+
+
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     scram-sha-256
+host    replication     all             127.0.0.1/32            scram-sha-256
+host    replication     all             ::1/128                 scram-sha-256
+
+- md5 or scram-sha-256 to trust
+# Allow replication connections from localhost, by a user with the
+# replication privilege.
+local   replication     all                                     scram-sha-256
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+
+-  Restart PostgreSQL Service  postgresql-x64-<version>
+net stop postgresql-x64-16
+net start postgresql-x64-16
+
+- login 
+psql -U postgres
+
+- check if running
+C:\Windows\system32>netstat -ano | findstr :5432
+  TCP    0.0.0.0:5432           0.0.0.0:0              LISTENING       5116
+  TCP    [::]:5432              [::]:0                 LISTENING       5116
+
+-- powershell - 
+PS C:\Windows\system32> Get-Service | Where-Object { $_.DisplayName -like "*postgres*" }
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  postgresql-x64-16  postgresql-x64-16 - PostgreSQL Serv...
+Running  postgresql-x64-17  postgresql-x64-17 - PostgreSQL Serv...
+
+-- powershell 
+
+Stop-Service -Name postgresql-x64-17
+
+Start-Service -Name postgresql-x64-16
+
+
+
+-- listen addresses
+C:\Program Files\PostgreSQL\16\data\postgresql.conf
+
+
+< verify port and use that
+
+psql -U postgres -h 127.0.0.1 -p 5433
+
+- change pass
+ALTER USER postgres WITH PASSWORD 'gel100';
+\q
+
+
+/                                                    /
+
+npx prisma generate

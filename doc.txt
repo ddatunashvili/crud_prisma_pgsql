@@ -1,0 +1,28 @@
+
+
+- add_user
+
+* POST /users 
+{
+    "name":"gela",
+    "email":"gela@gmail.com",
+    "password":"gel100"
+}
+
+- all_users
+
+* GET /users 
+
+- get_user
+
+* GET /users/<id>
+
+
+- update_user
+* PUT /users/<id>
+
+{
+    "name":"gela",
+    "email":"gela@gmail.com",
+    "password":"gel100"
+}
